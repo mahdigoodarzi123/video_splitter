@@ -8,7 +8,7 @@ from splt import *
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-token = 'token'
+token = '6034724305:AAGMjO4-sWHLmErLBypYkIgichw0Ca6-OWA'
 bot = telegram.Bot(token=token)
 
 def start(update, context):
@@ -63,8 +63,32 @@ def two_part(update, context):
         os.remove(f"part{i}.mp4")
 
 
+
+
+
 def two_custome_part(update, context):
-    context.bot.send_message(context.bot.send_message(chat_id=update.effective_chat.id, text="send me your custome time and i will ;las;'dcmles'lfm"))
+    # context.bot.send_message(context.bot.send_message(chat_id=update.effective_chat.id, text="send me your custome time and i will ;las;'dcmles'lfm"))
+    text2 = update.message.text
+    # 10-30
+    try:
+        t = int(text2)
+        custome(t)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="uploading...")
+        bot.send_video(update.message.chat_id, video=open("part1.mp4", 'rb'))
+        bot.send_video(update.message.chat_id, video=open("part2.mp4", 'rb'))
+        os.remove("part1.mp4")
+        os.remove("part2.mp4")
+        os.remove("video.mp4")
+
+
+    
+    except:
+        print("wrong format")
+    
+
+
+
+
 
 def main():
     """Start the bot."""
@@ -77,7 +101,7 @@ def main():
     dp.add_handler(CommandHandler('four_part', four_part))
     dp.add_handler(CommandHandler('three_part', three_part))
     dp.add_handler(CommandHandler('two_part', two_part))
-    dp.add_handler(CommandHandler('custome', two_custome_part))
+    dp.add_handler(MessageHandler(Filters.text, two_custome_part))
 
 
 
