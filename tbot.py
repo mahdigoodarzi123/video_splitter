@@ -8,15 +8,25 @@ from splt import *
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-token = '6034724305:AAGMjO4-sWHLmErLBypYkIgichw0Ca6-OWA'
+token = 'TOKEN HERE'
 bot = telegram.Bot(token=token)
 
 def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="first upload a video and then you have 4 options.\
-        1: /four_part for splitting the video you have sent into 4 equal parts\n\
-            2: /three_part for splitting the video you have sent into 4 equal parts\n\
-                3: /two_part for splitting the video you have sent into 4 equal parts\n\
-                    4: /custome for splitting the based on the time you give")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="""
+    first upload a video and then you have 4 options.\n\
+    1: /four_part for splitting the video you have sent into 4 equal parts\n\
+    2: /three_part for splitting the video you have sent into 4 equal parts\n\
+    3: /two_part for splitting the video you have sent into 4 equal parts\n\
+    4: and a number to split the given video in customize parts, press /help for more information on how the bot works\n\
+    programmer: @Erfan_Owl121""")
+
+
+
+def help(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="First you need to send a video and then use the commands(/four_part,/three_part, /two_part)\n\
+    If you want to customize the time, you have to send the time that you want the video to be splitted(in second).")
+
+
 
 def download_video(update: Update, context):
     """Download the video that the user sent."""
@@ -97,6 +107,7 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
 
     dp.add_handler(CommandHandler('four_part', four_part))
     dp.add_handler(CommandHandler('three_part', three_part))
